@@ -25,8 +25,14 @@ sub init {
     }
 
     my $guard = $self->_chdir;
-
     $self->_exec('init', $args->{box_name}, $args->{box_url});
+}
+
+sub destroy {
+    my ($self, $args) = @_;
+
+    my $guard = $self->_chdir;
+    $self->_exec('destroy', '--force', $args->{vm_name});
 }
 
 sub up {
@@ -34,7 +40,6 @@ sub up {
     my ($self) = @_;
 
     my $guard = $self->_chdir;
-
     $self->_exec('up');
 }
 

@@ -2,6 +2,7 @@ package Vagrant::Wrapper;
 use 5.008005;
 use strict;
 use warnings;
+use utf8;
 use Path::Tiny;
 use Scope::Guard;
 
@@ -48,6 +49,13 @@ sub up {
 
     my $guard = $self->_chdir;
     $self->_exec('up');
+}
+
+sub suspend {
+    my ($self, $args) = @_;
+
+    my $guard = $self->_chdir;
+    $self->_exec('suspend', $args->{vm_name});
 }
 
 sub _exec {

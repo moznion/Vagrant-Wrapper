@@ -58,6 +58,13 @@ sub suspend {
     $self->_exec('suspend', $args->{vm_name});
 }
 
+sub status {
+    my ($self, $args) = @_;
+
+    my $guard = $self->_chdir;
+    $self->_exec('status', $args->{vm_name});
+}
+
 sub _exec {
     my ($self, $cmd, @args) = @_;
 

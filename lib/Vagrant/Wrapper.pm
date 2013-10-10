@@ -35,6 +35,13 @@ sub destroy {
     $self->_exec('destroy', '--force', $args->{vm_name});
 }
 
+sub halt {
+    my ($self, $args) = @_;
+
+    my $guard = $self->_chdir;
+    $self->_exec('halt', '--force', $args->{vm_name});
+}
+
 sub up {
     # TODO options
     my ($self) = @_;

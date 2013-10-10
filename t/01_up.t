@@ -9,7 +9,6 @@ use Vagrant::Wrapper;
 
 use Test::More;
 
-
 my $original_exec = *Vagrant::Wrapper::_exec{CODE};
 undef *Vagrant::Wrapper::_exec;
 *Vagrant::Wrapper::_exec = sub {
@@ -17,9 +16,10 @@ undef *Vagrant::Wrapper::_exec;
     return "vagrant $cmd", Path::Tiny->cwd;
 };
 
-my $vagrant = Vagrant::Wrapper->new();
 
 subtest 'no path' => sub {
+    my $vagrant = Vagrant::Wrapper->new();
+
     my ($cmd, $path) = $vagrant->up;
     is $cmd,  'vagrant up', 'command is right';
     is $path, Path::Tiny->cwd;
@@ -27,7 +27,9 @@ subtest 'no path' => sub {
 
 subtest 'path specified' => sub {
     my $expected_path = Path::Tiny->cwd . '/t';
-    my (undef, $path) = $vagrant->up($expected_path);
+    my $vagrant       = Vagrant::Wrapper->new($expected_path);
+
+    my (undef, $path) = $vagrant->up;
     is $path, $expected_path;
 };
 

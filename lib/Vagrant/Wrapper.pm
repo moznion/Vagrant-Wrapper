@@ -8,9 +8,13 @@ use Scope::Guard;
 our $VERSION = "0.01";
 
 sub new {
-    my ($class) = @_;
-    # vagrant command is exist?
-    return bless {}, $class;
+    my ($class, $path) = @_;
+
+    # TODO [check] vagrant command is exist?
+
+    return bless {
+        path => $path,
+    }, $class;
 }
 
 sub init {
@@ -20,16 +24,16 @@ sub init {
         undef $args->{box_url};
     }
 
-    my $guard = $self->_chdir($args->{path});
+    my $guard = $self->_chdir;
 
     $self->_exec('init', $args->{box_name}, $args->{box_url});
 }
 
 sub up {
     # TODO options
-    my ($self, $path) = @_;
+    my ($self) = @_;
 
-    my $guard = $self->_chdir($path);
+    my $guard = $self->_chdir;
 
     $self->_exec('up');
 }
@@ -44,10 +48,10 @@ sub _exec {
 }
 
 sub _chdir {
-    my ($self, $path) = @_;
+    my ($self) = @_;
 
     my $orig_cwd = Path::Tiny->cwd;
-    $path ||= $orig_cwd;
+    my $path = $self->{path} || $orig_cwd;
 
     chdir $path;
 

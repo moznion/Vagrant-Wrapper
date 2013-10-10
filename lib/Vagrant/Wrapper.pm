@@ -2,8 +2,8 @@ package Vagrant::Wrapper;
 use 5.008005;
 use strict;
 use warnings;
-use Carp;
 use Path::Tiny;
+use Scope::Guard;
 
 our $VERSION = "0.01";
 
@@ -13,12 +13,23 @@ sub new {
     return bless {}, $class;
 }
 
+sub init {
+    my ($self, $args) = @_;
+
+    unless ($args->{box_name}) {
+        undef $args->{box_url};
+    }
+
+    my $guard = $self->_chdir($args->{path});
+
+    $self->_exec('init', $args->{box_name}, $args->{box_url});
+}
+
 sub up {
     # TODO options
     my ($self, $path) = @_;
 
-    $path ||= Path::Tiny->cwd;
-    chdir($path);
+    my $guard = $self->_chdir($path);
 
     $self->_exec('up');
 }
@@ -26,9 +37,24 @@ sub up {
 sub _exec {
     my ($self, $cmd, @args) = @_;
 
-    `vagrant $cmd`;
+    @args = map {$_ || ''} @args;
+    my $args = join(' ', @args);
+
+    `vagrant $cmd $args`;
 }
 
+sub _chdir {
+    my ($self, $path) = @_;
+
+    my $orig_cwd = Path::Tiny->cwd;
+    $path ||= $orig_cwd;
+
+    chdir $path;
+
+    return Scope::Guard->new(sub {
+        chdir $orig_cwd;
+    });
+};
 1;
 __END__
 

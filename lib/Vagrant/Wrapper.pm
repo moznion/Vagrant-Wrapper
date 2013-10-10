@@ -45,10 +45,10 @@ sub halt {
 
 sub up {
     # TODO options
-    my ($self) = @_;
+    my ($self, $args) = @_;
 
     my $guard = $self->_chdir;
-    $self->_exec('up');
+    $self->_exec('up', $args->{vm_name});
 }
 
 sub suspend {

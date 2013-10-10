@@ -65,6 +65,12 @@ sub status {
     $self->_exec('status', $args->{vm_name});
 }
 
+sub version {
+    my ($self) = @_;
+
+    $self->_exec('--version');
+}
+
 sub _exec {
     my ($self, $cmd, @args) = @_;
 

@@ -1,2 +1,2 @@
 name = "Vagrant-Wrapper"
-badge = ["travis"]
+badges = ["travis"]

@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/moznion/Vagrant-Wrapper.png?branch=master)](https://travis-ci.org/moznion/Vagrant-Wrapper)
 # NAME
 
 Vagrant::Wrapper - It's new $module

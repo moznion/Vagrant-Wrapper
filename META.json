@@ -43,6 +43,8 @@
       },
       "runtime" : {
          "requires" : {
+            "Path::Tiny" : "0",
+            "Scope::Guard" : "0",
             "perl" : "5.008005"
          }
       },
@@ -53,5 +55,16 @@
       }
    },
    "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/moznion/Vagrant-Wrapper/issues"
+      },
+      "homepage" : "https://github.com/moznion/Vagrant-Wrapper",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/moznion/Vagrant-Wrapper.git",
+         "web" : "https://github.com/moznion/Vagrant-Wrapper"
+      }
+   },
    "version" : "0.01"
 }
